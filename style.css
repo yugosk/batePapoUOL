@@ -4,6 +4,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
+    max-width: 500px;
 }
 
 header {
@@ -58,6 +59,7 @@ footer {
     z-index: 1;
     background-color: #FFFFFF;
     padding: 0 18px 0 18px;
+    box-shadow: 0 -4px 6px rgba(0,0,0,0.5);
 }
 
 footer > ion-icon {
@@ -75,4 +77,53 @@ input {
     font-style: italic;
     color: #000000;
     height: 30px;
+}
+
+ul {
+    margin-top: 26px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    margin-bottom: 26px;
+}
+
+li {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    word-wrap: break-word;
+    align-items: center;
+    border-radius: 2px;
+    flex-direction: row;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 4px;
+    padding: 18px;
+}
+
+p {
+    word-wrap: break-word;
+    line-height: 20px;
+}
+
+strong {
+    font-weight: 700;
+}
+
+em {
+    font-weight: 400;
+    color: #AAAAAA;
+}
+
+.status {
+    background-color: #dcdcdc;
+}
+
+.reservada {
+    background-color: #ffdede;
+}
+
+.publica {
+    background-color: #FFFFFF;
 }
