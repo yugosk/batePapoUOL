@@ -1,4 +1,4 @@
-let usuario
+let usuario;
 pedirNome();
 function pedirNome() {
     usuario = prompt("Qual o seu lindo nome?");
@@ -8,12 +8,12 @@ function pedirNome() {
     request.then(setInterval(mensagensAntigas,3000));
     request.catch(usuarioInvalido);
     setInterval(atualizarUsuario,5000);
-}
+};
 
 function usuarioInvalido() {
     alert("Usuário já conectado, digite outro nome");
     pedirNome();
-}
+};
 
 function mensagensAntigas() {
     const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
@@ -43,33 +43,46 @@ function carregarChat(promise) {
         }
     }
     chat.lastChild.scrollIntoView();
-}
+};
 
 function atualizarUsuario() {
     const usuarioAtualizado = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", {
         name: usuario
     });
-}
+};
 
 function enviarMsg() {
-    const destinatario = prompt("Para quem deseja mandar a mensagem? (Preencha com 'Todos' ou o nome do usuário que deseja enviar)")
-    let mensagem = document.querySelector("input").value
-    let envioMsg = {}
+    let destinatario = prompt("Para quem deseja mandar a mensagem? (Preencha com 'Todos' ou o nome do usuário que deseja enviar)");
+    let mensagem = document.querySelector("input").value;
+    let envioMsg = {};
     if (destinatario !== "Todos") {
         envioMsg = {
             from: usuario,
             to: destinatario,
             text: mensagem,
             type: "private-message"
-        }
+        };
     } else {
         envioMsg = {
             from: usuario,
             to: "Todos",
             text: mensagem,
             type: "message"
-            }
-        }
-const envio = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", envioMsg);
-mensagem.value = null;
+            };
+        };
+let envio = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", envioMsg);
+envio.then(envioSucesso)
+envio.catch(erroEnvio);
+
+}
+
+function envioSucesso() {
+    let mensagem = document.querySelector("input");
+    mensagensAntigas();
+    mensagem.value = "";
+}
+
+function erroEnvio() {
+    alert("Erro: Usuário não encontrado!");
+    enviarMsg();
 }
