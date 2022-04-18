@@ -5,8 +5,9 @@ function pedirNome() {
     const request = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", {
         name: usuario
     });
-    request.then(mensagensAntigas);
+    request.then(setInterval(mensagensAntigas,3000));
     request.catch(usuarioInvalido);
+    setInterval(atualizarUsuario,5000);
 }
 
 function usuarioInvalido() {
@@ -15,7 +16,6 @@ function usuarioInvalido() {
 }
 
 function mensagensAntigas() {
-    console.log("carregando chat")
     const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
     promise.then(carregarChat);
 };
@@ -43,5 +43,33 @@ function carregarChat(promise) {
         }
     }
     chat.lastChild.scrollIntoView();
-    console.log(promise.data)
+}
+
+function atualizarUsuario() {
+    const usuarioAtualizado = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", {
+        name: usuario
+    });
+}
+
+function enviarMsg() {
+    const destinatario = prompt("Para quem deseja mandar a mensagem? (Preencha com 'Todos' ou o nome do usuário que deseja enviar)")
+    let mensagem = document.querySelector("input").value
+    let envioMsg = {}
+    if (destinatario !== "Todos") {
+        envioMsg = {
+            from: usuario,
+            to: destinatario,
+            text: mensagem,
+            type: "private-message"
+        }
+    } else {
+        envioMsg = {
+            from: usuario,
+            to: "Todos",
+            text: mensagem,
+            type: "message"
+            }
+        }
+const envio = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", envioMsg);
+mensagem.value = null;
 }
